@@ -82,7 +82,7 @@ export default {
       }
     },
     async refreshData() {
-      this.blogs = (await BlogService.index()).data;
+      this.blogs = (await BlogsService.index()).data;
     },
   },
 };
