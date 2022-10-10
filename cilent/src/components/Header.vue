@@ -1,28 +1,55 @@
 <template>
-    <div>
-        <div class="sidebar"> 
-            <div class="img">
-                <p><img src="../assets/logo-page.png"></p>
-            </div>
-            <a><router-link :to="{name: 'items'}"><i class='fas fa-clipboard'></i> รายละเอียดหนังสือ Anime</router-link></a>
-            <a><router-link :to="{name: 'blogs'}"><i class='fas fa-file-invoice-dollar'></i> สั่งซื้อหนังสือ Anime</router-link></a>
-            <a><router-link :to="{name: 'comments'}"><i class='fas fa-comments'></i> Comment หนังสือ</router-link></a>
-            <a><router-link :to="{name: 'users'}"><i class='fas fa-address-book'></i> ผู้ใช้งาน</router-link></a>
-            <a><router-link :to="{name: 'login'}"><i class='fas fa-sign-in-alt'></i> Login</router-link></a>
-            <a><a v-on:cick.prevent="logout" href="login"><i class='fas fa-sign-out-alt'></i> Logout</a></a>
-        </div>
+  <div>
+    <div class="sidebar">
+      <div class="img">
+        <p><img src="../assets/logo-page.png"></p>
+      </div>
+      <a>
+        <router-link :to="{name: 'items'}"><i class='fas fa-clipboard'></i> รายละเอียดหนังสือ Anime</router-link>
+      </a>
+      <a>
+        <router-link :to="{name: 'blogs'}"><i class='fas fa-file-invoice-dollar'></i> สั่งซื้อหนังสือ Anime
+        </router-link>
+      </a>
+      <a>
+        <router-link :to="{name: 'comments'}"><i class='fas fa-comments'></i> Comment หนังสือ</router-link>
+      </a>
+      <a>
+        <router-link :to="{name: 'users'}"><i class='fas fa-address-book'></i> ผู้ใช้งาน</router-link>
+      </a>
+      <a>
+        <router-link :to="{name: 'login'}"><i class='fas fa-sign-in-alt'></i> Login</router-link>
+      </a>
+      <a><button v-on:click="logout" href="users"><i class='fas fa-sign-out-alt'></i>Logout</button></a> 
     </div>
+  </div>
 
 </template>
 
 <script>
+
+
+
+
 export default {
+  data() {
+    return {
+      
+    }
+  },
   methods: {
-    logout () {
+    navigateTo(route) {
+      this.$router.push(route)
+
+    },
+    async refreshData() {
+      this.users = (await UsersService.index()).data
+    },
+    logout() {
       this.$store.dispatch('setToken', null)
       this.$store.dispatch('setUser', null)
       this.$router.push({
-        name: 'login'
+        name: 'users'
       })
     }
   }
@@ -30,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-    /* The side navigation menu */
+/* The side navigation menu */
 .sidebar {
   margin: 0;
   padding: 0;
@@ -48,7 +75,8 @@ export default {
 .sidebar a {
   display: block;
   color: white;
-  padding: 9px; /* ห่างจากตัวออกไป */
+  padding: 9px;
+  /* ห่างจากตัวออกไป */
   text-decoration: none;
 }
 
@@ -79,8 +107,14 @@ div.content {
     height: auto;
     position: relative;
   }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
+
+  .sidebar a {
+    float: left;
+  }
+
+  div.content {
+    margin-left: 0;
+  }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
@@ -91,16 +125,16 @@ div.content {
   }
 }
 
-.sidebar a.router-link-active{
-    color: white;
-    background-color: #014913;
-     border-radius: 50px 50px 50px 50px;
+.sidebar a.router-link-active {
+  color: white;
+  background-color: #014913;
+  border-radius: 50px 50px 50px 50px;
 
 }
-div.img img {
-        width: 250px;
-        height: 200px;
-       
-    }
 
+div.img img {
+  width: 250px;
+  height: 200px;
+
+}
 </style>

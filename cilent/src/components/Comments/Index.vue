@@ -79,7 +79,7 @@ export default {
       }
     },
     async refreshData() {
-      this.comments = (await CommentService.index()).data;
+      this.comments = (await CommentsService.index()).data;
     },
   },
 };
